@@ -42,3 +42,5 @@ drizzle
 ngrok for webhook sync
 concurrently
 tRPC
+react-query
+vercel deployment
