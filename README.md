@@ -44,3 +44,4 @@ concurrently
 tRPC
 react-query
 vercel deployment
+upstash for rate limit
