@@ -46,3 +46,4 @@ react-query
 vercel deployment
 upstash for rate limit
 mux
+uploadthing
