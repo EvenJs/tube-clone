@@ -39,3 +39,11 @@ clerk for authentication
 neon for database
 drizzle
 `bunx drizzle-kit studio`
+ngrok for webhook sync
+concurrently
+tRPC
+react-query
+vercel deployment
+upstash for rate limit
+mux
+uploadthing
