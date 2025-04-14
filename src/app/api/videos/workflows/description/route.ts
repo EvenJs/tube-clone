@@ -1,4 +1,4 @@
-import { TITLE_SYSTEM_PROMPT } from "@/constants";
+import { DESCRIPTION_SYSTEM_PROMPT } from "@/constants";
 import { db } from "@/db";
 import { videos } from "@/db/schema";
 import { serve } from "@upstash/workflow/nextjs"
@@ -8,7 +8,6 @@ interface InputType {
   userId: string;
   videoId: string;
 }
-
 
 export const { POST } = serve(
   async (context) => {
@@ -42,7 +41,7 @@ export const { POST } = serve(
         model: "gpt-4o",
         messages: [{
           role: "system",
-          content: TITLE_SYSTEM_PROMPT,
+          content: DESCRIPTION_SYSTEM_PROMPT,
         }, {
           role: "user",
           content: transcript,
@@ -50,19 +49,16 @@ export const { POST } = serve(
       }
     })
 
-    const title = body.choices[0]?.message.content;
+    const description = body.choices[0]?.message.content;
 
 
     await context.run("update-video", async () => {
       await db.update(videos).set({
-        title: title || video.title,
+        description: description || video.description,
       })
         .where(and(eq(videos.id, video.id), eq(videos.userId, video.userId)))
 
     })
 
-    // await context.run("second-step", () => {
-    //   console.log("second step ran")
-    // })
   }
 )
