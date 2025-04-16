@@ -1,20 +1,23 @@
-// import { z } from "zod"
-// import { eq, and, or, lt, desc } from "drizzle-orm";
-
-import { mux } from "@/lib/mux"
-import { db } from "@/db";
-import { users, videos, videoUpdateSchema } from "@/db/schema";
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { TRPCError } from "@trpc/server";
 import { and, eq, getTableColumns } from "drizzle-orm";
 import { z } from "zod";
 import { UTApi } from "uploadthing/server";
+
+import { mux } from "@/lib/mux"
+import { db } from "@/db";
+import { users, videos, videoUpdateSchema, videoViews } from "@/db/schema";
+import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { TRPCError } from "@trpc/server";
 import { workflow } from "@/lib/workflow";
 
 export const videosRouter = createTRPCRouter({
   getOne: baseProcedure.input(z.object({ id: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
-      const [existingVideo] = await db.select({ ...getTableColumns(videos), user: { ...getTableColumns(users) } })
+    .query(async ({ input }) => {
+      const [existingVideo] = await db
+        .select({
+          ...getTableColumns(videos),
+          user: { ...getTableColumns(users) },
+          viewCount: db.$count(videoViews, eq(videoViews.videoId, videos.id)),
+        })
         .from(videos)
         .innerJoin(users, eq(videos.userId, users.id))
         .where(eq(videos.id, input.id));
