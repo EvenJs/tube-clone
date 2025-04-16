@@ -216,9 +216,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                           variant="outline"
                           className="rounded-full size-6 [&_svg]:size-3"
                           onClick={() => generateTitle.mutate({ id: videoId })}
-                          disabled={
-                            generateTitle.isPending || !video.muxTrackId
-                          }
+                          disabled={generateTitle.isPending}
                         >
                           {generateTitle.isPending ? (
                             <Loader2Icon className="animate-spin" />
@@ -276,7 +274,6 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                   </FormItem>
                 )}
               />
-              {/* TODO: Add thumbnail field */}
               <FormField
                 name="thumbnailUrl"
                 control={form.control}
