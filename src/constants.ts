@@ -1,6 +1,6 @@
 export const DEFAULT_LIMIT = 5
 
-export const APP_URL = process.env.VERCEL_URL;
+export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 export const TITLE_SYSTEM_PROMPT = `
 Your task is to generate an SEO-focused title for a YouTube video based on its transcript. Please follow those guidelines:
