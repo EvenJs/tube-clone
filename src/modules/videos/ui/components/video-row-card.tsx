@@ -44,7 +44,11 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
   onRemove?: () => void;
 }
 
-export const VideoRowCard = ({ data, size, onRemove }: VideoRowCardProps) => {
+export const VideoRowCard = ({
+  data,
+  size = "default",
+  onRemove,
+}: VideoRowCardProps) => {
   const compactViews = useMemo(() => {
     return Intl.NumberFormat("en", {
       notation: "compact",

@@ -5,6 +5,8 @@ import { trpc } from "@/trpc/client";
 import { VideoRowCard } from "../components/video-row-card";
 import { VideoGridCard } from "../components/video-grid-card";
 import { InfiniteScroll } from "@/components/infinite-scroll";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface SuggestionsSectionProps {
   videoId: string;
@@ -12,6 +14,17 @@ interface SuggestionsSectionProps {
 }
 
 export const SuggestionsSection = ({
+  videoId,
+  isManual,
+}: SuggestionsSectionProps) => {
+  <Suspense fallback={<p>Loading...</p>}>
+    <ErrorBoundary fallback={<p>Error</p>}>
+      <SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
+    </ErrorBoundary>
+  </Suspense>;
+};
+
+export const SuggestionsSectionSuspense = ({
   videoId,
   isManual,
 }: SuggestionsSectionProps) => {

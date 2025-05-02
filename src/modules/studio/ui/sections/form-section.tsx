@@ -53,6 +53,7 @@ import { snakeCaseToTitle } from "@/lib/utils";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
+import { APP_URL } from "@/constants";
 
 interface FormSectionProps {
   videoId: string;
@@ -104,6 +105,17 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     },
   });
 
+  const revalidate = trpc.videos.revalidate.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
+      toast.success("Video revalidate");
+    },
+    onError: () => {
+      toast.error("something went wrong!");
+    },
+  });
+
   const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
     onSuccess: () => {
       utils.studio.getMany.invalidate();
@@ -146,9 +158,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     update.mutate(data);
   };
 
-  const fullUrl = `${
-    process.env.VERCEL_URL || "http://localhost:3000"
-  }/videos/${videoId}`;
+  const fullUrl = `${APP_URL}/videos/${videoId}`;
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -191,6 +201,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    onClick={() => revalidate.mutate({ id: videoId })}
+                  >
+                    <RotateCcwIcon className="size-4 mr-2" />
+                    Revalidate
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => remove.mutate({ id: videoId })}
                   >
