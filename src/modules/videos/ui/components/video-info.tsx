@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { VideoGetManyOutput } from "../../types";
-import { formatDistance, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { UserAvatar } from "@/components/user-avatar";
 import Link from "next/link";
 import { UserInfo } from "@/modules/users/ui/components/user-info";
