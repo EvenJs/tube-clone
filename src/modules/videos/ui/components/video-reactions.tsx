@@ -13,7 +13,7 @@ interface VideoReactionsProps {
   dislikes: number;
   viewerReaction: VideoGetOneOutput["viewerReaction"];
 }
-// TODO: properly implement video reacts
+
 export const VideoReactions = ({
   videoId,
   likes,

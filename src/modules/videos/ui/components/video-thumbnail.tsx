@@ -36,7 +36,6 @@ export const VideoThumbnail = ({
       <div className="absolute bottom-2 right-2 px-1 py-0.5 rounded bg-black/80 text-white font-medium">
         {formatDuration(duration)}
       </div>
-      {/* TODO: Add video duration box */}
     </div>
   );
 };
