@@ -21,20 +21,20 @@ interface UserAvatarProps extends VariantProps<typeof avatarVariants> {
   imageUrl: string;
   name: string;
   className?: string;
-  onclick?: () => void;
+  onClick?: () => void;
 }
 
 export const UserAvatar = ({
   imageUrl,
   name,
   className,
-  onclick,
+  onClick,
   size,
 }: UserAvatarProps) => {
   return (
     <Avatar
       className={cn(avatarVariants({ size, className }))}
-      onClick={onclick}
+      onClick={onClick}
     >
       <AvatarImage src={imageUrl} alt={name} />
     </Avatar>
