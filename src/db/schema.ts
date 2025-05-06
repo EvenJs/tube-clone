@@ -157,7 +157,7 @@ export const comments = pgTable("comments", {
     foreignKey({
       columns: [t.parentId],
       foreignColumns: [t.id],
-      name: "comment_parent_id_fkey",
+      name: "comments_parent_id_fkey",
     }).onDelete("cascade")
   ]
 })
