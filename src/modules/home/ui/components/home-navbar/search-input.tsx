@@ -8,7 +8,6 @@ import { SearchIcon, XIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const SearchInput = () => {
-  // TODO: add search functionality
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -58,7 +57,6 @@ const SearchInput = () => {
             <XIcon className="text-gray-500" />
           </Button>
         )}
-        {/* TODO: add remove search button */}
       </div>
       <button
         disabled={!value.trim()}
