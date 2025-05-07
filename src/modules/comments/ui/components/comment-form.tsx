@@ -8,7 +8,7 @@ import { trpc } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { UserAvatar } from "@/components/user-avatar";
-import { commentsInsertSchema } from "@/db/schema";
+import { commentInsertSchema } from "@/db/schema";
 import {
   Form,
   FormControl,
@@ -51,9 +51,12 @@ export const CommentForm = ({
       }
     },
   });
+  const commentsInsertWithoutUserId = commentInsertSchema.omit({
+    userId: true,
+  });
 
-  const form = useForm<z.infer<typeof commentsInsertSchema>>({
-    resolver: zodResolver(commentsInsertSchema.omit({ userId: true })),
+  const form = useForm<z.infer<typeof commentsInsertWithoutUserId>>({
+    resolver: zodResolver(commentsInsertWithoutUserId),
     defaultValues: {
       videoId: videoId,
       parentId: parentId,
@@ -61,7 +64,9 @@ export const CommentForm = ({
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof commentsInsertSchema>) => {
+  const handleSubmit = (
+    values: z.infer<typeof commentsInsertWithoutUserId>
+  ) => {
     create.mutate({ ...values, videoId });
   };
 

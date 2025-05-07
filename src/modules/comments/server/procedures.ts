@@ -14,8 +14,6 @@ export const commentsRouter = createTRPCRouter({
       const { id } = input;
       const { id: userId } = ctx.user;
 
-
-
       const [deletedComment] = await db
         .delete(comments)
         .where(and(
@@ -29,13 +27,14 @@ export const commentsRouter = createTRPCRouter({
       }
     }),
   create: protectedProcedure
-    .input(z.object({
-      videoId: z.string().uuid(),
-      value: z.string(),
-      parentId: z.string().uuid().nullish(),
-    }))
+    .input(
+      z.object({
+        videoId: z.string().uuid(),
+        value: z.string(),
+        parentId: z.string().uuid().nullish(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
-
       const { videoId, value, parentId } = input;
       const { id: userId } = ctx.user;
 
