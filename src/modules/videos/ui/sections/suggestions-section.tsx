@@ -17,11 +17,13 @@ export const SuggestionsSection = ({
   videoId,
   isManual,
 }: SuggestionsSectionProps) => {
-  <Suspense fallback={<p>Loading...</p>}>
-    <ErrorBoundary fallback={<p>Error</p>}>
-      <SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
-    </ErrorBoundary>
-  </Suspense>;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <ErrorBoundary fallback={<p>Error</p>}>
+        <SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
+      </ErrorBoundary>
+    </Suspense>
+  );
 };
 
 export const SuggestionsSectionSuspense = ({

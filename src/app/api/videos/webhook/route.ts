@@ -80,7 +80,16 @@ export const POST = async (request: Request) => {
 
 
       await db.update(videos)
-        .set({ muxStatus: data.status, muxPlaybackId: playbackId, muxAssetId: data.id, thumbnailUrl, thumbnailKey, previewKey, previewUrl, duration })
+        .set({
+          muxStatus: data.status,
+          muxPlaybackId: playbackId,
+          muxAssetId: data.id,
+          thumbnailUrl,
+          thumbnailKey,
+          previewKey,
+          previewUrl,
+          duration
+        })
         .where(eq(videos.muxUploadId, data.upload_id))
       break;
 
