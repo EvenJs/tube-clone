@@ -29,8 +29,7 @@ export const subscriptionsRouter = createTRPCRouter({
         .innerJoin(users, eq(subscriptions.creatorId, users.id))
         .where(
           and(
-
-            eq(subscriptions.creatorId, userId),
+            eq(subscriptions.viewerId, userId),
             cursor
               ? or(lt(subscriptions.updatedAt, cursor.updatedAt),
                 and(
@@ -59,7 +58,6 @@ export const subscriptionsRouter = createTRPCRouter({
       if (userId === ctx.user.id) {
         throw new TRPCError({ code: "BAD_REQUEST" })
       }
-
 
       const [createdSubscription] = await db
         .insert(subscriptions)
